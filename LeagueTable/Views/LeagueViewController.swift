@@ -10,7 +10,7 @@ import Kingfisher
 class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDataSource,UISearchBarDelegate {
     var sportName : String?
     let cellID = "LeagueCell"
-    let leagueTableViewModel = LeagueTableViewModel()
+    let leagueTableViewModel = LeagueTableViewModel(network: NetworkManager()) // Need to implement dependency incjection later
     var leagueList : [LeagueItem]?
     var filteredLeagueList : [LeagueItem]?
     @IBOutlet weak var tableView: UITableView!
