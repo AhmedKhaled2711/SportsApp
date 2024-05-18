@@ -13,5 +13,6 @@ class LeagueResponse: Decodable {
 
 class LeagueItem: Decodable{
     var league_name, league_logo : String?
+    var youtube : String?
     var league_key: Int?
 }

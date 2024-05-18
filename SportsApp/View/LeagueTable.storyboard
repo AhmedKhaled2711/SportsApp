@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -99,8 +100,8 @@
                                                     <rect key="frame" x="8" y="35" width="118" height="114"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ujr-8L-YvR">
-                                                    <rect key="frame" x="146" y="81.666666666666671" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="146" y="83" width="159" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -119,6 +120,7 @@
                                                 <constraint firstItem="3mj-CT-CEZ" firstAttribute="centerY" secondItem="fJr-h9-EJd" secondAttribute="centerY" id="cXq-aL-7yi"/>
                                                 <constraint firstItem="ujr-8L-YvR" firstAttribute="centerY" secondItem="fJr-h9-EJd" secondAttribute="centerY" id="cjZ-FL-w6T"/>
                                                 <constraint firstItem="ujr-8L-YvR" firstAttribute="leading" secondItem="mPU-B6-jAf" secondAttribute="trailing" constant="20" id="sTj-pj-yFa"/>
+                                                <constraint firstItem="3mj-CT-CEZ" firstAttribute="leading" secondItem="ujr-8L-YvR" secondAttribute="trailing" constant="10" id="scY-Ll-xG9"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -136,21 +138,29 @@
                                     <outlet property="delegate" destination="Y6W-OH-hqX" id="cOC-Mg-8vX"/>
                                 </connections>
                             </searchBar>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="7KC-qD-Rwb">
+                                <rect key="frame" x="178" y="420" width="37" height="37"/>
+                                <color key="color" name="AccentColor"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="7KC-qD-Rwb" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="4IM-oX-z2N"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="BT4-Yi-JRC" secondAttribute="bottom" id="7E2-gg-Fa8"/>
                             <constraint firstItem="cKq-sO-fbX" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="9aO-G4-3CV"/>
                             <constraint firstItem="BT4-Yi-JRC" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Ic7-aI-s2H"/>
+                            <constraint firstItem="BT4-Yi-JRC" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="QBu-D5-7r4"/>
                             <constraint firstItem="BT4-Yi-JRC" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" id="Uxl-tM-hpj"/>
                             <constraint firstItem="BT4-Yi-JRC" firstAttribute="top" secondItem="cKq-sO-fbX" secondAttribute="bottom" id="VwC-ha-YtT"/>
                             <constraint firstItem="cKq-sO-fbX" firstAttribute="leading" secondItem="BT4-Yi-JRC" secondAttribute="leading" id="YNZ-1m-tJ5"/>
+                            <constraint firstItem="7KC-qD-Rwb" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="eIi-zZ-QAq"/>
                             <constraint firstItem="cKq-sO-fbX" firstAttribute="trailing" secondItem="BT4-Yi-JRC" secondAttribute="trailing" id="fa8-vr-U2C"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="BT4-Yi-JRC" secondAttribute="trailing" id="g51-2x-eCV"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loadingIndicator" destination="7KC-qD-Rwb" id="7UV-25-Cnl"/>
                         <outlet property="tableView" destination="BT4-Yi-JRC" id="hKa-Sq-tgd"/>
                     </connections>
                 </viewController>
@@ -160,6 +170,9 @@
         </scene>
     </scenes>
     <resources>
+        <namedColor name="AccentColor">
+            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

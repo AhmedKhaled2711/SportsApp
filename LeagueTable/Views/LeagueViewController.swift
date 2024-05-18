@@ -6,18 +6,24 @@
 //
 
 import UIKit
-
+import Kingfisher
 class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDataSource {
-    @IBOutlet weak var tableView: UITableView!
+    var sportName : String?
     let cellID = "LeagueCell"
+    let leagueTableViewModel = LeagueTableViewModel()
+    var leagueList : [LeagueItem]?
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return leagueList?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! LeagueTableViewCell
-        cell.leagueImage.image = UIImage(named: "leagueplaceholder.png")
-        cell.leagueTitle.text = "premier league"
+        let currentLeague = leagueList?[indexPath.row]
+//        print(currentLeague?.youtube)
+        cell.leagueImage.kf.setImage(with: URL(string: currentLeague?.league_logo ?? ""), placeholder: UIImage(named: "leagueplaceholder.png"))
+        cell.leagueTitle.text = currentLeague?.league_name
         cell.youtubeLinkImage.image = UIImage(named: "youtubelogo3.png")
         // Configure the cell...
 
@@ -27,23 +33,21 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
         let cellHeight = tableView.frame.size.height / 4
         return cellHeight
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // write your code here
+    }
     
-    var leagueList : [LeagueItem]?
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "League Table"
+        title = sportName
         tableView.delegate = self
         tableView.dataSource = self
-        NetworkManager().fetchLeaguesData{[weak self] result in
-            switch result {
-            case .success(let leagueResponse):
-                let leagueList = leagueResponse.result
-                print(leagueList)
-                self?.leagueList = leagueList
-                self?.tableView.reloadData()
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+        leagueTableViewModel.fetchLeagueList(sportName: self.sportName!.lowercased())
+        leagueTableViewModel.dataBinder = { [weak self] () in
+            self?.leagueList = self?.leagueTableViewModel.leagueList
+            self?.loadingIndicator.stopAnimating()
+            self?.tableView.reloadData()
+            
         }
         // Do any additional setup after loading the view.
     }

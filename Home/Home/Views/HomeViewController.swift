@@ -9,7 +9,7 @@ import UIKit
 import Kingfisher
 class HomeViewController: UIViewController, UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var collectionView: UICollectionView!
-    var sports: [String] = ["Soccer", "Basketball", "Hockey", "Tennis"]
+    var sports: [String] = ["Football", "Basketball", "Cricket", "Tennis"]
     var images: [String] = ["footballplayer.png", "basketballplayer.png","cricketplayer.png","tennisplayer.png"]
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return sports.count
@@ -38,6 +38,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate,UICollectio
         let leagueStoryBoard = UIStoryboard(name: "LeagueTable", bundle: nil)
         let leagueVC = leagueStoryBoard.instantiateInitialViewController() as! LeagueViewController
         leagueVC.modalPresentationStyle = .fullScreen
+        leagueVC.sportName = sports[indexPath.row]
         navigationController?.pushViewController(leagueVC, animated: true)
     }
     
