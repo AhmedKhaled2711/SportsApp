@@ -18,16 +18,27 @@ class HomeViewController: UIViewController, UICollectionViewDelegate,UICollectio
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let padding: CGFloat = 10
         let collectionViewSize = collectionView.frame.size.width - padding
+        let collectionViewHeight = collectionView.frame.size.height - padding
+        let cellHeight = collectionViewHeight / 2
         let cellWidth = collectionViewSize / 2
-        return CGSize(width: cellWidth - padding, height: cellWidth - padding)
+        return CGSize(width: cellWidth - padding, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCell", for: indexPath) as! HomeCollectionViewCell
-        cell.sportName.text = sports[indexPath.row]
-        // Load image with placeholder and error handling
-//        cell.sportImage.kf.setImage(with: URL(string: ""),placeholder: UIImage(named: images[indexPath.row]))
-        return cell
+       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCell", for: indexPath) as! HomeCollectionViewCell
+       cell.sportName.text = sports[indexPath.row]
+       
+       // Load image with placeholder
+       let imageName = images[indexPath.row]
+       cell.sportImage.image = UIImage(named: imageName)
+    
+       return cell
+   }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let leagueStoryBoard = UIStoryboard(name: "LeagueTable", bundle: nil)
+        let leagueVC = leagueStoryBoard.instantiateInitialViewController() as! LeagueViewController
+        leagueVC.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(leagueVC, animated: true)
     }
     
 
@@ -35,6 +46,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate,UICollectio
         super.viewDidLoad()
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         // Do any additional setup after loading the view.
     }
     
