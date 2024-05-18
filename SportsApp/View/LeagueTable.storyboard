@@ -161,6 +161,7 @@
                     </view>
                     <connections>
                         <outlet property="loadingIndicator" destination="7KC-qD-Rwb" id="7UV-25-Cnl"/>
+                        <outlet property="searchBar" destination="cKq-sO-fbX" id="UwB-0W-bvT"/>
                         <outlet property="tableView" destination="BT4-Yi-JRC" id="hKa-Sq-tgd"/>
                     </connections>
                 </viewController>
