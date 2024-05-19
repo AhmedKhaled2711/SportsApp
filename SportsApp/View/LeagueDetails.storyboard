@@ -142,8 +142,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="doc.questionmark.fill.rtl" catalog="system" width="115" height="128"/>
-        <image name="pencil.tip.crop.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="doc.questionmark.fill.rtl" catalog="system" width="32" height="32"/>
+        <image name="pencil.tip.crop.circle.fill" catalog="system" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
