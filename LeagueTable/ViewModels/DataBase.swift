@@ -10,6 +10,25 @@ import CoreData
 import UIKit
 
 class DataBase : DataBaseProtocol{
+    func deleteLeagueFromFavorite(league: LeagueItem?) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("Unable to access AppDelegate")
+            return
+        }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteLeague")
+        fetchRequest.predicate = NSPredicate(format: "league_name = %@", league?.league_name ?? "")
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            if let objectToDelete = result.first as? NSManagedObject {
+                managedContext.delete(objectToDelete)
+                try managedContext.save()
+            }
+        } catch let error as NSError {
+            print("Error deleting object: \(error), \(error.userInfo)")
+        }
+    }
+    
     func saveLeagueToDataBase(league : LeagueItem){
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             print("Unable to access AppDelegate")

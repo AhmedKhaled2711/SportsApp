@@ -22,7 +22,6 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! LeagueTableViewCell
-        let favoriteImageView = cell.youtubeLinkImage
         let currentLeague = filteredLeagueList?[indexPath.row]
 //        print(currentLeague?.youtube)
         cell.leagueImage.kf.setImage(with: URL(string: currentLeague?.league_logo ?? ""), placeholder: UIImage(named: "leagueplaceholder.png"))
