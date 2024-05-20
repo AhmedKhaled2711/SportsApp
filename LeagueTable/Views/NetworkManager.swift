@@ -10,6 +10,7 @@ import Alamofire
 class NetworkManager : NetworkServiceProtocol{
     let API_KEY = "22dda350e03f8f59a082bcf441d5cb29a48277d786b6c3abe6197bc43205fab8"
     let baseUrl = ""
+    
     func fetchLeaguesData(sportName : String ,completion: @escaping (Result<LeagueResponse, Error>) -> Void) {
         let urlString = "https://apiv2.allsportsapi.com/\(sportName)/?met=Leagues&APIkey=\(API_KEY)"
         AF.request(urlString)

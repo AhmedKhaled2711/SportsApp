@@ -31,6 +31,12 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let current = filteredLeagueList?[indexPath.row]
+        //task news details
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cellHeight = tableView.frame.size.height / 4
         return cellHeight
