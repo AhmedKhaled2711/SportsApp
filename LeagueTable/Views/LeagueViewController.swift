@@ -35,10 +35,6 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
         let cellHeight = tableView.frame.size.height / 4
         return cellHeight
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // write your code here
-    }
-    
     
     // search bar delegate methods
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

@@ -2,14 +2,12 @@
 //  LeagueDetailsCollectionViewController.swift
 //  SportsApp
 //
-//  Created by Ahmed Khaled on 16/05/2024.
+//  Created by Ahmed Khaled on 19/05/2024.
 //
 
 import UIKit
 
-
 class LeagueDetailsCollectionViewController: UICollectionViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,9 +22,6 @@ class LeagueDetailsCollectionViewController: UICollectionViewController {
                     }
                 }
                 collectionView.setCollectionViewLayout(layout, animated: true)
-        
-           
-       
     }
 
     
@@ -122,9 +117,9 @@ class LeagueDetailsCollectionViewController: UICollectionViewController {
                 case 0 :
                     cellIdentifier = "upcomingEventsCell"
                 case 1 :
-                    cellIdentifier = "cell3"
+                    cellIdentifier = "liveMatchesCell"
                 case 2 :
-                    cellIdentifier = "cell2"
+                    cellIdentifier = "TeamsCell"
                     
                 default:
                     print("error")
@@ -132,15 +127,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController {
        
        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath)
        
-       // Configure the cell based on the section
-       // You can differentiate the sections using the `indexPath.section`
-       // For example:
-       // if indexPath.section == 0 {
-       //     // Configure cell for banner section
-       // } else {
-       //     // Configure cell for category section
-       // }
-       
        return cell
     }
+
 }

@@ -127,6 +127,7 @@
                                             <outlet property="leagueImage" destination="mPU-B6-jAf" id="WwB-5b-rHS"/>
                                             <outlet property="leagueTitle" destination="ujr-8L-YvR" id="OBk-wL-qfw"/>
                                             <outlet property="youtubeLinkImage" destination="3mj-CT-CEZ" id="Gyh-aK-src"/>
+                                            <segue destination="wk0-0L-DrF" kind="show" id="j6I-xk-l3u"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -168,6 +169,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="382" y="-35"/>
+        </scene>
+        <!--LeagueDetails-->
+        <scene sceneID="QOL-X3-Pct">
+            <objects>
+                <viewControllerPlaceholder storyboardName="LeagueDetails" id="wk0-0L-DrF" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="sZh-wS-ThT"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F8p-6H-suK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="849" y="-130"/>
         </scene>
     </scenes>
     <resources>
