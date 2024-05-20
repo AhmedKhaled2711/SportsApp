@@ -22,6 +22,7 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! LeagueTableViewCell
+        let favoriteImageView = cell.youtubeLinkImage
         let currentLeague = filteredLeagueList?[indexPath.row]
 //        print(currentLeague?.youtube)
         cell.leagueImage.kf.setImage(with: URL(string: currentLeague?.league_logo ?? ""), placeholder: UIImage(named: "leagueplaceholder.png"))
@@ -37,6 +38,7 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // write your code here
+        
     }
     
     
@@ -63,6 +65,7 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
         tableView.dataSource = self
         searchBar.delegate = self
         leagueTableViewModel.fetchLeagueList(sportName: self.sportName!.lowercased())
+//        print(DataBase().fetchFavoriteLeagues())
         leagueTableViewModel.dataBinder = { [weak self] () in
             self?.leagueList = self?.leagueTableViewModel.leagueList
             self?.filteredLeagueList = self?.leagueList
