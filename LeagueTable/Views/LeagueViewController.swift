@@ -79,6 +79,7 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
         tableView.dataSource = self
         searchBar.delegate = self
         leagueTableViewModel.fetchLeagueList(sportName: self.sportName!.lowercased())
+//        print(DataBase().fetchFavoriteLeagues())
         leagueTableViewModel.dataBinder = { [weak self] () in
             self?.leagueList = self?.leagueTableViewModel.leagueList
             self?.filteredLeagueList = self?.leagueList
