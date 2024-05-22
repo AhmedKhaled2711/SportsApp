@@ -33,8 +33,22 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let current = filteredLeagueList?[indexPath.row]
-        //task news details
+        print("Item selected at indexPath: \(indexPath)")
+
+        if let selectedLeague = filteredLeagueList?[indexPath.row] {
+            
+            let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
+            if let LeagueDetailsCollectionView = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsId") as? LeagueDetailsCollectionViewController {
+                LeagueDetailsCollectionView.leagueItem = selectedLeague
+                LeagueDetailsCollectionView.sportNameRecieved = title
+                print(title)
+                //print(selectedLeague.league_key ?? <#default value#>)
+                LeagueDetailsCollectionView.modalPresentationStyle = .fullScreen
+               // present(LeagueDetailsCollectionView, animated: true, completion: nil)
+                navigationController?.pushViewController(LeagueDetailsCollectionView, animated: true)
+            }
+        }
+
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

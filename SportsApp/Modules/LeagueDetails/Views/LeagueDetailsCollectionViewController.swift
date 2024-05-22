@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 protocol SectionTitleProvider {
     func titleForSection(_ section: Int) -> String
@@ -13,23 +14,71 @@ protocol SectionTitleProvider {
 
 class LeagueDetailsCollectionViewController: UICollectionViewController  , SectionTitleProvider{
     
+    var leagueItem : LeagueItem?
+    var sportNameRecieved : String?
+    let leagueDetailsViewModel = LeagueDetailsViewModel(network: NetworkManager()) // Need to implement dependency incjection later
+    var listOfUpcomingEvents : [UpcomingEvent]?
+    var listOfLiveMatches : [liveMatchResult]?
+    var listOfTeams : [Int] = []
+    
     override func viewDidLoad() {
-            super.viewDidLoad()
-
-            collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
-
-            let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
-                switch sectionIndex {
-                case 0:
-                    return self.upcomingEventsTop()
-                case 1:
-                    return self.liveMatchesMiddle()
-                default:
-                    return self.teamsBottom()
-                }
+        super.viewDidLoad()
+        
+        collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "NavigationBackCell")  // Register the cell identifier here
+        
+        let layout = UICollectionViewCompositionalLayout { sectionIndex, environment in
+            switch sectionIndex {
+            case 0:
+                return self.upcomingEventsTop()
+            case 1:
+                return self.liveMatchesMiddle()
+            default:
+                return self.teamsBottom()
             }
-            collectionView.setCollectionViewLayout(layout, animated: true)
         }
+        collectionView.setCollectionViewLayout(layout, animated: true)
+        
+        // listOfUpcomingEvents
+        if let leagueKey = self.leagueItem?.league_key {
+            leagueDetailsViewModel.fetchUpcomingEvents(sportName : sportNameRecieved!.lowercased()  , leagueId: leagueKey)
+            
+            leagueDetailsViewModel.dataBinder = { [weak self] () in
+                self?.listOfUpcomingEvents = self?.leagueDetailsViewModel.listOfUpcomingEvents
+                //self?.loadingIndicator.stopAnimating()
+                if let listOfEvents = self?.listOfUpcomingEvents {
+                    print(listOfEvents[0].event_date ?? "")
+                } else {
+                    print("listOfUpcomingEvents is nil")
+                }
+
+                self?.collectionView.reloadData()
+            }
+            
+        } else {
+            // Handle the case where leagueItem or league_key is nil
+        }
+        
+        // listOfLiveMatches
+        if let leagueKey = self.leagueItem?.league_key {
+            leagueDetailsViewModel.fetchResults(sportName : sportNameRecieved!.lowercased()  , leagueId: leagueKey)
+            
+            leagueDetailsViewModel.dataBinder2 = { [weak self] () in
+                self?.listOfLiveMatches = self?.leagueDetailsViewModel.listOfResults
+                //self?.loadingIndicator.stopAnimating()
+                if let listOfEvents = self?.listOfLiveMatches {
+                    print(listOfEvents[0].event_final_result ?? "")
+                } else {
+                    print("listOfUpcomingEvents is nil")
+                }
+
+                self?.collectionView.reloadData()
+            }
+            
+        } else {
+            // Handle the case where leagueItem or league_key is nil
+        }
+    }
         
         func titleForSection(_ section: Int) -> String {
             switch section {
@@ -43,7 +92,23 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
                 return ""
             }
         }
-        
+    
+//    func navigationBack() -> NSCollectionLayoutSection {
+//        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+//        
+//        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
+//        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+//        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+//        
+//        let section = NSCollectionLayoutSection(group: group)
+//        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+//        section.orthogonalScrollingBehavior = .continuous
+//        
+//        return section
+//    }
+
+    
         func upcomingEventsTop() -> NSCollectionLayoutSection {
 
             let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
@@ -121,7 +186,18 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
         }
 
         override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return 10
+            switch section {
+               case 0:
+                   return listOfUpcomingEvents?.count ?? 0 // Use the count of upcoming events
+               case 1:
+                   // Return the count of live matches data
+                return listOfLiveMatches?.count ?? 0
+               case 2:
+                   // Return the count of teams data
+                   return listOfTeams.count
+               default:
+                   return 0
+               }
         }
 
         override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -129,9 +205,32 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
             
             switch indexPath.section {
             case 0:
-                cellIdentifier = "upcomingEventsCell"
+                    cellIdentifier = "upcomingEventsCell"
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! upcomingEventsCell
+                    if let event = listOfUpcomingEvents?[indexPath.item] {
+                        
+                        cell.date.text = event.event_date
+                        cell.time.text = event.event_time
+                        cell.homeTeamName.text = event.event_home_team
+                        cell.awayTeamName.text = event.event_away_team
+                        cell.homeTeamImage.kf.setImage(with: URL(string: event.home_team_logo ?? ""), placeholder: UIImage(named: "leagueplaceholder.png"))
+                        cell.awayTeamImage.kf.setImage(with: URL(string: event.away_team_logo ?? ""), placeholder: UIImage(named: "leagueplaceholder.png"))
+                    }
+                    return cell
             case 1:
                 cellIdentifier = "liveMatchesCell"
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! liveMatchesCell
+                if let event = listOfLiveMatches?[indexPath.item] {
+                    
+                    cell.score.text = event.event_final_result
+                    cell.date.text = event.event_date
+                    cell.time.text = event.event_time
+                    cell.homeTeamName.text = event.event_home_team
+                    cell.awayTeamName.text = event.event_away_team
+                    cell.homeTeamImage.kf.setImage(with: URL(string: event.home_team_logo ?? ""), placeholder: UIImage(named: "leagueplaceholder.png"))
+                    cell.awayTeamImage.kf.setImage(with: URL(string: event.away_team_logo ?? ""), placeholder: UIImage(named: "leagueplaceholder.png"))
+                }
+                return cell
             case 2:
                 cellIdentifier = "TeamsCell"
             default:
