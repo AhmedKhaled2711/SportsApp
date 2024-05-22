@@ -91,7 +91,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="VTc-rq-9lw">
-                                <rect key="frame" x="0.0" y="115" width="393" height="622"/>
+                                <rect key="frame" x="0.0" y="159" width="393" height="534"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FavoriteCell" rowHeight="184" id="yFD-mQ-uLM" customClass="LeagueTableViewCell" customModule="SportsApp" customModuleProvider="target">
@@ -137,24 +137,33 @@
                                 </prototypes>
                             </tableView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="hvb-KW-Yit">
-                                <rect key="frame" x="0.0" y="59" width="393" height="56"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="HbN-l1-38l">
                                 <rect key="frame" x="178" y="395.66666666666669" width="37" height="37"/>
                                 <color key="color" name="AccentColor"/>
                             </activityIndicatorView>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bps-mg-Sx7">
+                                <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                                <items>
+                                    <navigationItem title="Favorite Leagues" id="hCc-z0-R5R"/>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8En-8h-13h"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="hvb-KW-Yit" firstAttribute="top" secondItem="8En-8h-13h" secondAttribute="top" id="1s1-ej-KIh"/>
+                            <constraint firstItem="hvb-KW-Yit" firstAttribute="top" secondItem="bps-mg-Sx7" secondAttribute="bottom" id="1s1-ej-KIh"/>
                             <constraint firstItem="VTc-rq-9lw" firstAttribute="width" secondItem="MtA-ih-sVL" secondAttribute="width" id="1tg-hi-RLD"/>
+                            <constraint firstItem="bps-mg-Sx7" firstAttribute="top" secondItem="8En-8h-13h" secondAttribute="top" id="5Gw-iT-APk"/>
+                            <constraint firstItem="bps-mg-Sx7" firstAttribute="leading" secondItem="MtA-ih-sVL" secondAttribute="leading" id="8mF-L7-iOm"/>
                             <constraint firstItem="HbN-l1-38l" firstAttribute="centerX" secondItem="8En-8h-13h" secondAttribute="centerX" id="8pY-zl-qZv"/>
                             <constraint firstItem="VTc-rq-9lw" firstAttribute="centerY" secondItem="MtA-ih-sVL" secondAttribute="centerY" id="Fo1-fs-oMH"/>
                             <constraint firstItem="HbN-l1-38l" firstAttribute="centerY" secondItem="8En-8h-13h" secondAttribute="centerY" id="L9j-yn-FGg"/>
                             <constraint firstItem="VTc-rq-9lw" firstAttribute="centerX" secondItem="8En-8h-13h" secondAttribute="centerX" id="WaS-6s-id8"/>
                             <constraint firstItem="VTc-rq-9lw" firstAttribute="top" secondItem="hvb-KW-Yit" secondAttribute="bottom" id="ekR-T5-Smi"/>
+                            <constraint firstAttribute="trailing" secondItem="bps-mg-Sx7" secondAttribute="trailing" id="jCh-Kh-QxA"/>
                             <constraint firstItem="hvb-KW-Yit" firstAttribute="trailing" secondItem="8En-8h-13h" secondAttribute="trailing" id="qBC-wg-3TB"/>
                             <constraint firstItem="hvb-KW-Yit" firstAttribute="leading" secondItem="8En-8h-13h" secondAttribute="leading" id="uc2-Qt-CQf"/>
                         </constraints>
