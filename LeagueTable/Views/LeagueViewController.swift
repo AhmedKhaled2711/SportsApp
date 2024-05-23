@@ -41,7 +41,7 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
             if let LeagueDetailsCollectionView = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsId") as? LeagueDetailsCollectionViewController {
                 LeagueDetailsCollectionView.leagueItem = selectedLeague
                 LeagueDetailsCollectionView.sportNameRecieved = title
-                print(title)
+                //print(title)
                 //print(selectedLeague.league_key ?? <#default value#>)
                 LeagueDetailsCollectionView.modalPresentationStyle = .fullScreen
                // present(LeagueDetailsCollectionView, animated: true, completion: nil)

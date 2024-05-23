@@ -10,20 +10,26 @@ class LeagueDetailsViewModel{
     var network : NetworkServiceProtocol?
     var listOfUpcomingEvents : [UpcomingEvent]?{
         didSet{
-            dataBinder()
+            dataBinderUpcomingEvents()
         }
     }
-    var listOfResults : [liveMatchResult]?{
+    var listOfResults : [LiveMatchResult]?{
         didSet{
-            dataBinder2()
+            dataBinderResults()
+        }
+    }
+    var listOfTeams : [Team]?{
+        didSet{
+            dataBinderTeams()
         }
     }
     init(network : NetworkServiceProtocol) {
         self.network = network
     }
-    var dataBinder : () -> () = {}
-    var dataBinder2 : () -> () = {}
-
+    var dataBinderUpcomingEvents : () -> () = {}
+    var dataBinderResults : () -> () = {}
+    var dataBinderTeams : () -> () = {}
+    
     func fetchUpcomingEvents(sportName : String , leagueId : Int){
         network?.fetchUpcomingEvent(sportName : sportName , leagueId: leagueId){ [weak self] result in
             switch result{
@@ -45,4 +51,14 @@ class LeagueDetailsViewModel{
             }
         }
     }
+    
+    func fetchTeams(sportName : String , leagueId : Int){
+        network?.fetchTeams(sportName: sportName, leagueId: leagueId){ [weak self] result in
+            switch result{
+            case .success(let teamResponse):
+                self?.listOfTeams = teamResponse.result
+            case .failure(let error):
+                print("Error: "+error.localizedDescription)
+            }
+        }}
 }

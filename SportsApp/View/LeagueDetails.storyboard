@@ -43,7 +43,7 @@
                                                 <constraint firstAttribute="height" constant="21" id="2Na-pv-7Yc"/>
                                                 <constraint firstAttribute="width" constant="110" id="6LM-7W-Lmf"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -52,7 +52,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="110" id="Rvp-N0-zmK"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -134,7 +134,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="110" id="Wqf-Av-gmT"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -143,7 +143,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="110" id="xgx-wo-1ba"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -223,7 +223,7 @@
                                     <outlet property="time" destination="xQ2-Pt-F3d" id="C2L-f3-dZB"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TeamsCell" id="Ncd-2R-uGX">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TeamsCell" id="Ncd-2R-uGX" customClass="TeamsCell" customModule="SportsApp" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="349.66666666666669" width="393" height="165"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MWN-u4-BL5">
@@ -244,6 +244,9 @@
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="393" height="165"/>
+                                <connections>
+                                    <outlet property="teamImage" destination="ivF-Bw-2nl" id="5C3-gx-1KJ"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -252,7 +255,11 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="League Details" id="Zhc-GM-mkn">
-                        <barButtonItem key="rightBarButtonItem" image="heart" catalog="system" id="z7J-Bw-4k5"/>
+                        <barButtonItem key="rightBarButtonItem" image="heart" catalog="system" id="z7J-Bw-4k5">
+                            <connections>
+                                <action selector="favoriteBtn:" destination="oyd-Le-Got" id="mxX-VQ-ARH"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmi-E1-Wvi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

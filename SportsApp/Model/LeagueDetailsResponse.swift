@@ -18,13 +18,27 @@ struct UpcomingEvent: Decodable {
 }
 
 // live Match
-struct liveMatchResponse: Decodable {
+struct LiveMatchResponse: Decodable {
     let success: Int?
-    let result: [liveMatchResult]?
+    let result: [LiveMatchResult]?
 }
 
 
-struct liveMatchResult: Decodable {
+struct LiveMatchResult: Decodable {
     let event_home_team, event_away_team, event_final_result, home_team_logo, away_team_logo: String?
     let event_date, event_time: String?
 }
+
+//teams
+struct TeamResponse: Decodable {
+    let success: Int?
+    let result: [Team]?
+}
+
+
+struct Team: Decodable {
+    let  team_name, team_logo: String?
+    let team_key : Int?
+    
+}
+
