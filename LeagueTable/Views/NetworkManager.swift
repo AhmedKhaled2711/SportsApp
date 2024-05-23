@@ -49,21 +49,12 @@ class NetworkManager : NetworkServiceProtocol{
             }
     }
     
-    func fetchLiveMatchResults(sportName : String , leagueId: Int, completion: @escaping (Result<liveMatchResponse, any Error>) -> Void) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let currentDate = Date()
-        guard let oneYearLaterDate = Calendar.current.date(byAdding: .year, value: -1, to: currentDate) else {
-            completion(.failure("Network error badURL" as! Error))
-            return
-        }
-        let currentDateString = dateFormatter.string(from: currentDate)
-        let oneYearLaterDateString = dateFormatter.string(from: oneYearLaterDate)
+    func fetchLiveMatchResults(sportName : String , leagueId: Int, completion: @escaping (Result<LiveMatchResponse, any Error>) -> Void) {
         
         let urlString = "https://apiv2.allsportsapi.com/\(sportName)?met=Livescore&leagueId=\(leagueId)&APIkey=\(API_KEY)"
         AF.request(urlString)
             .validate()
-            .responseDecodable(of: liveMatchResponse.self) { response in
+            .responseDecodable(of: LiveMatchResponse.self) { response in
                 switch response.result {
                 case .success(let fixtureResponse):
                     completion(.success(fixtureResponse))
@@ -73,4 +64,22 @@ class NetworkManager : NetworkServiceProtocol{
             }
     }
     
+    func fetchTeams(sportName: String, leagueId: Int, completion: @escaping (Result<TeamResponse, any Error>) -> Void) {
+//        let urlString = "https://apiv2.allsportsapi.com/\(sportName)/?met=Teams&leagueId=\(leagueId)APIkey=\(API_KEY)"
+        let urlString = "https://apiv2.allsportsapi.com/\(sportName)/?met=Teams&leagueId=\(leagueId)&APIkey=\(API_KEY)"
+
+        AF.request(urlString)
+            .validate()
+            .responseDecodable(of: TeamResponse.self) { response in
+                switch response.result {
+                case .success(let teamResponse):
+                    completion(.success(teamResponse))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
 }
+
+
