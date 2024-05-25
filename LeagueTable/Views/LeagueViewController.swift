@@ -31,14 +31,30 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Item selected at indexPath: \(indexPath)")
+
+        if let selectedLeague = filteredLeagueList?[indexPath.row] {
+            
+            let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
+            if let LeagueDetailsCollectionView = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsId") as? LeagueDetailsCollectionViewController {
+                LeagueDetailsCollectionView.leagueItem = selectedLeague
+                LeagueDetailsCollectionView.sportNameRecieved = title
+                print(title)
+                //print(selectedLeague.league_key ?? <#default value#>)
+                LeagueDetailsCollectionView.modalPresentationStyle = .fullScreen
+               // present(LeagueDetailsCollectionView, animated: true, completion: nil)
+                navigationController?.pushViewController(LeagueDetailsCollectionView, animated: true)
+            }
+        }
+
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cellHeight = tableView.frame.size.height / 4
         return cellHeight
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // write your code here
-    }
-    
     
     // search bar delegate methods
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -63,6 +79,7 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
         tableView.dataSource = self
         searchBar.delegate = self
         leagueTableViewModel.fetchLeagueList(sportName: self.sportName!.lowercased())
+//        print(DataBase().fetchFavoriteLeagues())
         leagueTableViewModel.dataBinder = { [weak self] () in
             self?.leagueList = self?.leagueTableViewModel.leagueList
             self?.filteredLeagueList = self?.leagueList

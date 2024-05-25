@@ -12,15 +12,17 @@ class LeagueTableViewCell: UITableViewCell {
     @IBOutlet weak var youtubeLinkImage: UIImageView!
     @IBOutlet weak var leagueTitle: UILabel!
     @IBOutlet weak var leagueImage: UIImageView!
+    var favoriteImageTapped: (() -> Void)?
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        youtubeLinkImage.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(favoriteImageTappedAction))
+        youtubeLinkImage.addGestureRecognizer(tapGestureRecognizer)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    @objc func favoriteImageTappedAction() {
+        favoriteImageTapped?()
     }
 
 }
