@@ -43,7 +43,7 @@ class LeagueDetailsViewModel{
     }
     
     func fetchResults(sportName : String , leagueId : Int){
-        network?.fetchLiveMatchResults(sportName : sportName , leagueId: leagueId){ [weak self] result in
+        network?.fetchLatest(sportName : sportName , leagueId: leagueId){ [weak self] result in
             switch result{
             case .success(let liveMatchResponse):
                 self?.listOfResults = liveMatchResponse.result

@@ -22,7 +22,7 @@ class LeagueDetailsViewModelDatabase{
     }
     
     func checkIfFavorite(league: LeagueItem)  -> Bool{
-        ((dataBase?.checkIfFavorite(league: league)) != nil)
+        return dataBase?.checkIfFavorite(league: league) ?? false
     }
     
 }

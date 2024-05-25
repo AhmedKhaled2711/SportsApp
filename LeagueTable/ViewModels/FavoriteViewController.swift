@@ -36,16 +36,26 @@ class FavoriteViewController: UIViewController , UITableViewDelegate, UITableVie
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Update data source
             let deletedLeague = filteredList?[indexPath.row]
-            viewModel?.deleteLeagueFromFavorite(league: deletedLeague)
-            filteredList?.remove(at: indexPath.row)
-            favoriteList?.removeAll(where: { league in
-                league.league_name == deletedLeague?.league_name
-            })
-            tableView.deleteRows(at: [indexPath], with: .automatic)
+            let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to remove this league from favorites?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
+                self.performDeleteAction(for: deletedLeague, at: indexPath)
+            }))
+            
+            present(alert, animated: true, completion: nil)
         }
     }
+
+    func performDeleteAction(for league: LeagueItem?, at indexPath: IndexPath) {
+        viewModel?.deleteLeagueFromFavorite(league: league)
+        filteredList?.remove(at: indexPath.row)
+        favoriteList?.removeAll { $0.league_name == league?.league_name }
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+
 
     // search delegate methods
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

@@ -22,6 +22,7 @@ class TeamDetailsViewController: UIViewController ,  UITableViewDelegate,UITable
     
     @IBOutlet weak var coachName: UILabel!
     
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     
     
@@ -33,12 +34,15 @@ class TeamDetailsViewController: UIViewController ,  UITableViewDelegate,UITable
         teamDetailsViewModel.getTeamDetails(sportName: self.sportName!.lowercased(), teamId: teamKey!)
         teamDetailsViewModel.dataBinder = { [weak self] () in
             self?.teamDetailsList = self?.teamDetailsViewModel.teamDetails
+            self?.loadingIndicator.stopAnimating()
+            self?.teamName.isHidden = false
+            self?.teamImage.isHidden = false
+            self?.coachName.isHidden = false
             self?.tableView.reloadData()
             
-            // Update UI elements after data is loaded
             if let teamDetails = self?.teamDetailsList?.first {
                 self?.teamName.text = teamDetails.team_name
-                self?.coachName.text = teamDetails.coaches?.first?.coach_name
+                self?.coachName.text = "Coach  \(teamDetails.coaches?.first?.coach_name ?? "")"
                 self?.teamImage.kf.setImage(with: URL(string: teamDetails.team_logo ?? ""), placeholder: UIImage(named: "leagueplaceholder.png"))
             }
             

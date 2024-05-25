@@ -14,6 +14,9 @@ protocol SectionTitleProvider {
 
 class LeagueDetailsCollectionViewController: UICollectionViewController  , SectionTitleProvider{
     
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
+    
+    
     var leagueItem : LeagueItem?
     var sportNameRecieved : String?
     let leagueDetailsViewModel = LeagueDetailsViewModel(network: NetworkManager()) // Need to implement dependency incjection later
@@ -23,7 +26,6 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
     var isFavorite = false
     let leagueDetailsViewModelDatabase = LeagueDetailsViewModelDatabase(dataBase: DataBase()) // Need to implement dependency incjection later
     var favoriteButtonItem: UIBarButtonItem?
-
     
     
     override func viewDidLoad() {
@@ -56,7 +58,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
             
             leagueDetailsViewModel.dataBinderUpcomingEvents = { [weak self] () in
                 self?.listOfUpcomingEvents = self?.leagueDetailsViewModel.listOfUpcomingEvents
-                //self?.loadingIndicator.stopAnimating()
+                self?.loadingIndicator.stopAnimating()
                 if let listOfEvents = self?.listOfUpcomingEvents {
                     print(listOfEvents[0].event_date ?? "")
                 } else {
@@ -76,7 +78,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
             
             leagueDetailsViewModel.dataBinderResults = { [weak self] () in
                 self?.listOfLiveMatches = self?.leagueDetailsViewModel.listOfResults
-                //self?.loadingIndicator.stopAnimating()
+                self?.loadingIndicator.stopAnimating()
                 if let listOfEvents = self?.listOfLiveMatches {
                     print(listOfEvents[0].event_final_result ?? "")
                 } else {
@@ -96,7 +98,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
             
             leagueDetailsViewModel.dataBinderTeams = { [weak self] () in
                 self?.listOfTeams = self?.leagueDetailsViewModel.listOfTeams
-                //self?.loadingIndicator.stopAnimating()
+                self?.loadingIndicator.stopAnimating()
                 if let listOfEvents = self?.listOfTeams {
                     print(listOfEvents[0].team_name ?? "")
                 } else {
@@ -320,6 +322,22 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
     }
 
     @objc func favoriteButtonTapped() {
+        if isFavorite {
+               let alert = UIAlertController(title: "Confirmation", message: "Are you sure you want to remove this league from favorites?", preferredStyle: .alert)
+               
+               alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+               
+               alert.addAction(UIAlertAction(title: "Remove", style: .destructive, handler: { _ in
+                   self.performFavoriteAction()
+               }))
+               
+               present(alert, animated: true, completion: nil)
+           } else {
+               performFavoriteAction()
+           }
+    }
+
+    func performFavoriteAction() {
         isFavorite.toggle()
         updateFavoriteButtonImage()
         if isFavorite {
@@ -327,7 +345,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
             print("league saved")
         } else {
             leagueDetailsViewModelDatabase.deleteLeagueFromFavorite(league: leagueItem)
-            print("league delete")
+            print("league deleted")
         }
     }
     

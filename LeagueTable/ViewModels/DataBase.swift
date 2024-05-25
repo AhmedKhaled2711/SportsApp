@@ -93,6 +93,7 @@ class DataBase : DataBaseProtocol{
             // Fetching results from Core Data
             let result = try managedContext.fetch(fetchRequest)
             // If there are any results, league is favorite
+            print(result)
             return !result.isEmpty
         } catch {
             // Error handling
@@ -100,5 +101,8 @@ class DataBase : DataBaseProtocol{
             return false
         }
     }
+    
+   
+
 
 }

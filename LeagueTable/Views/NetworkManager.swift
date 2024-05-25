@@ -50,7 +50,6 @@ class NetworkManager : NetworkServiceProtocol{
     }
     
     func fetchLiveMatchResults(sportName : String , leagueId: Int, completion: @escaping (Result<LiveMatchResponse, any Error>) -> Void) {
-        
         let urlString = "https://apiv2.allsportsapi.com/\(sportName)?met=Livescore&leagueId=\(leagueId)&APIkey=\(API_KEY)"
         AF.request(urlString)
             .validate()
@@ -65,7 +64,6 @@ class NetworkManager : NetworkServiceProtocol{
     }
     
     func fetchTeams(sportName: String, leagueId: Int, completion: @escaping (Result<TeamResponse, any Error>) -> Void) {
-//        let urlString = "https://apiv2.allsportsapi.com/\(sportName)/?met=Teams&leagueId=\(leagueId)APIkey=\(API_KEY)"
         let urlString = "https://apiv2.allsportsapi.com/\(sportName)/?met=Teams&leagueId=\(leagueId)&APIkey=\(API_KEY)"
 
         AF.request(urlString)
@@ -95,6 +93,34 @@ class NetworkManager : NetworkServiceProtocol{
         
     }
     
+    func fetchLatest(sportName: String, leagueId: Int, completion: @escaping (Result<LiveMatchResponse, Error>) -> Void) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let currentDate = Date()
+        
+        // Calculate one month earlier date
+        guard let oneMonthEarlierDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) else {
+            completion(.failure("Network error: Unable to calculate date" as! Error))
+            return
+        }
+        
+        let currentDateString = dateFormatter.string(from: currentDate)
+        let oneMonthEarlierDateString = dateFormatter.string(from: oneMonthEarlierDate)
+        
+        let urlString = "https://apiv2.allsportsapi.com/\(sportName)?met=Fixtures&leagueId=\(leagueId)&from=\(oneMonthEarlierDateString)&to=\(currentDateString)&APIkey=\(API_KEY)"
+        
+        AF.request(urlString)
+            .validate()
+            .responseDecodable(of: LiveMatchResponse.self) { response in
+                switch response.result {
+                case .success(let fixtureResponse):
+                    completion(.success(fixtureResponse))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+
     
     
 }
