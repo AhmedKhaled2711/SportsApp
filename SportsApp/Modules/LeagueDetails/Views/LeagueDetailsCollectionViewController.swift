@@ -21,14 +21,20 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
     var listOfLiveMatches : [LiveMatchResult]?
     var listOfTeams : [Team]?
     var isFavorite = false
+    let leagueDetailsViewModelDatabase = LeagueDetailsViewModelDatabase(dataBase: DataBase()) // Need to implement dependency incjection later
+    var favoriteButtonItem: UIBarButtonItem?
+
     
-    
-    @IBAction func favoriteBtn(_ sender: UIBarButtonItem) {
-        
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let league = leagueItem {
+            isFavorite = leagueDetailsViewModelDatabase.checkIfFavorite(league: league)
+            print(isFavorite)
+        }
+       // updateFavoriteButtonImage()
+        setupFavoriteButton()
         
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.reuseIdentifier)
         
@@ -276,7 +282,54 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
             cell.contentView.layer.cornerRadius = 16
         }
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            switch indexPath.section {
+            case 0:
+                if let event = listOfUpcomingEvents?[indexPath.item] {
+                   
+                }
+            case 1:
+                if let match = listOfLiveMatches?[indexPath.item] {
+                }
+            case 2:
+                if let team = listOfTeams?[indexPath.item] {
+                    let storyboard = UIStoryboard(name: "TeamDetails", bundle: nil)
+                    if let teamDetailsView = storyboard.instantiateViewController(withIdentifier: "TeamDetailsId") as? TeamDetailsViewController {
+                        teamDetailsView.teamKey = team.team_key
+                        teamDetailsView.sportName = sportNameRecieved
+                        teamDetailsView.modalPresentationStyle = .fullScreen
+                        navigationController?.pushViewController(teamDetailsView, animated: true)
+                    }
+                }
+            default:
+                print("Invalid section")
+            }
+        }
     
+    
+    func setupFavoriteButton() {
+        favoriteButtonItem = UIBarButtonItem(image: UIImage(named: "heart"), style: .plain, target: self, action: #selector(favoriteButtonTapped))
+        navigationItem.rightBarButtonItem = favoriteButtonItem
+        updateFavoriteButtonImage()
+    }
+    
+   
+    func updateFavoriteButtonImage() {
+        let imageName = isFavorite ? "fill" : "heart"
+        favoriteButtonItem?.image = UIImage(named: imageName)
+    }
 
+    @objc func favoriteButtonTapped() {
+        isFavorite.toggle()
+        updateFavoriteButtonImage()
+        if isFavorite {
+            leagueDetailsViewModelDatabase.saveLeagueToFavorite(league: leagueItem)
+            print("league saved")
+        } else {
+            leagueDetailsViewModelDatabase.deleteLeagueFromFavorite(league: leagueItem)
+            print("league delete")
+        }
+    }
+    
 
 }

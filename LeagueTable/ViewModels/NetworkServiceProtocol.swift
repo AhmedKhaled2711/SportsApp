@@ -12,4 +12,5 @@ protocol NetworkServiceProtocol {
     func fetchUpcomingEvent(sportName : String , leagueId: Int, completion: @escaping (Result<UpcomingEventResponse, Error>) -> Void)
     func fetchLiveMatchResults(sportName : String , leagueId: Int, completion: @escaping (Result<LiveMatchResponse, Error>) -> Void)
     func fetchTeams(sportName : String , leagueId: Int ,completion: @escaping (Result<TeamResponse, Error>) -> Void)
+    func fetchTeamDetails(sportName : String , teamId: Int ,completion: @escaping (Result<TeamDetailsResponse, Error>) -> Void)
 }

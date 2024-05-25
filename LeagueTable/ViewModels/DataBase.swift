@@ -71,4 +71,34 @@ class DataBase : DataBaseProtocol{
             return nil
         }
     }
+    
+    func checkIfFavorite(league: LeagueItem) -> Bool {
+        // Accessing the app delegate
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            print("Unable to access AppDelegate")
+            return false
+        }
+        
+        // Accessing managed object context
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        // Creating a fetch request
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteLeague")
+        
+        // Setting up predicate to filter based on league key
+        let predicate = NSPredicate(format: "league_key == %@", String(league.league_key!))
+        fetchRequest.predicate = predicate
+        
+        do {
+            // Fetching results from Core Data
+            let result = try managedContext.fetch(fetchRequest)
+            // If there are any results, league is favorite
+            return !result.isEmpty
+        } catch {
+            // Error handling
+            print("Error fetching favorite league: \(error)")
+            return false
+        }
+    }
+
 }

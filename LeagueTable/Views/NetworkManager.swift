@@ -80,6 +80,23 @@ class NetworkManager : NetworkServiceProtocol{
             }
     }
     
+    func fetchTeamDetails(sportName: String, teamId: Int, completion: @escaping (Result<TeamDetailsResponse, any Error>) -> Void) {
+        let urlString = "https://apiv2.allsportsapi.com/\(sportName)/?met=Teams&teamId=\(teamId)&APIkey=\(API_KEY)"
+        AF.request(urlString)
+            .validate()
+            .responseDecodable(of: TeamDetailsResponse.self) { response in
+                switch response.result {
+                case .success(let teamResponse):
+                    completion(.success(teamResponse))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        
+    }
+    
+    
+    
 }
 
 

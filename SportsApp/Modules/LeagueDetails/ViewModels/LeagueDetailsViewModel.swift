@@ -7,6 +7,7 @@
 
 import Foundation
 class LeagueDetailsViewModel{
+    var dataBase : DataBaseProtocol?
     var network : NetworkServiceProtocol?
     var listOfUpcomingEvents : [UpcomingEvent]?{
         didSet{

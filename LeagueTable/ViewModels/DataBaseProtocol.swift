@@ -11,4 +11,5 @@ protocol DataBaseProtocol{
     func saveLeagueToDataBase(league : LeagueItem) -> Void
     func fetchFavoriteLeagues() -> [LeagueItem]?
     func deleteLeagueFromFavorite(league : LeagueItem?) -> Void
+    func checkIfFavorite(league: LeagueItem) -> Bool
 }
