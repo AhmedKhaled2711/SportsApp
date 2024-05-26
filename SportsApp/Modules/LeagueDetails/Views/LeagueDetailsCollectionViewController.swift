@@ -118,7 +118,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
         case 0:
             return "Upcoming Events"
         case 1:
-            return "Live Matches"
+            return "Latest Matches"
         case 2:
             return "Teams"
         default:

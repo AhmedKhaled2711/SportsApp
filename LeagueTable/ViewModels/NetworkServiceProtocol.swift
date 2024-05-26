@@ -8,6 +8,7 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
+    
     func fetchLeaguesData(sportName : String ,completion: @escaping (Result<LeagueResponse, Error>) -> Void)
     func fetchUpcomingEvent(sportName : String , leagueId: Int, completion: @escaping (Result<UpcomingEventResponse, Error>) -> Void)
     func fetchLiveMatchResults(sportName : String , leagueId: Int, completion: @escaping (Result<LiveMatchResponse, Error>) -> Void)

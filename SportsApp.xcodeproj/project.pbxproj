@@ -28,6 +28,8 @@
 		B02EC5792C01D289009843A5 /* TeamDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02EC5782C01D289009843A5 /* TeamDetailsTableViewCell.swift */; };
 		B02EC57B2C01D321009843A5 /* TeamDetailsItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B02EC57A2C01D321009843A5 /* TeamDetailsItem.swift */; };
 		B03582092BFA63BB009F0459 /* LeagueDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03582082BFA63BB009F0459 /* LeagueDetailsCollectionViewController.swift */; };
+		B03DB8B82C03EBEE0033ED4F /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03DB8B72C03EBEE0033ED4F /* Database.swift */; };
+		B03DB8BA2C03F0AE0033ED4F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B03DB8B92C03F0AE0033ED4F /* NetworkManager.swift */; };
 		B0955CD12BFFB4D10045B913 /* LeagueDetailsViewModelDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0955CD02BFFB4D10045B913 /* LeagueDetailsViewModelDatabase.swift */; };
 		B0BE74492BFE6A9800F14FD2 /* LeagueDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BE74482BFE6A9800F14FD2 /* LeagueDetailsViewModel.swift */; };
 		B0BE744B2BFE760100F14FD2 /* upcomingEventsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0BE744A2BFE760100F14FD2 /* upcomingEventsCell.swift */; };
@@ -94,6 +96,8 @@
 		B02EC5782C01D289009843A5 /* TeamDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		B02EC57A2C01D321009843A5 /* TeamDetailsItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsItem.swift; sourceTree = "<group>"; };
 		B03582082BFA63BB009F0459 /* LeagueDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueDetailsCollectionViewController.swift; sourceTree = "<group>"; };
+		B03DB8B72C03EBEE0033ED4F /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		B03DB8B92C03F0AE0033ED4F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		B0955CD02BFFB4D10045B913 /* LeagueDetailsViewModelDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueDetailsViewModelDatabase.swift; sourceTree = "<group>"; };
 		B0BE74482BFE6A9800F14FD2 /* LeagueDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueDetailsViewModel.swift; sourceTree = "<group>"; };
 		B0BE744A2BFE760100F14FD2 /* upcomingEventsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = upcomingEventsCell.swift; sourceTree = "<group>"; };
@@ -301,6 +305,8 @@
 		B021B8072BF5395D00871F7A /* SportsAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				B03DB8B92C03F0AE0033ED4F /* NetworkManager.swift */,
+				B03DB8B72C03EBEE0033ED4F /* Database.swift */,
 				B021B8082BF5395D00871F7A /* SportsAppTests.swift */,
 			);
 			path = SportsAppTests;
@@ -689,6 +695,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B03DB8BA2C03F0AE0033ED4F /* NetworkManager.swift in Sources */,
+				B03DB8B82C03EBEE0033ED4F /* Database.swift in Sources */,
 				B021B8092BF5395D00871F7A /* SportsAppTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -924,6 +932,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MARKETING_VERSION = 1.0;
@@ -944,6 +953,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				MARKETING_VERSION = 1.0;
@@ -963,6 +973,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ITI.SportsAppUITests;
@@ -981,6 +992,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ITI.SportsAppUITests;
