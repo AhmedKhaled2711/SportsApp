@@ -82,7 +82,7 @@
             </objects>
             <point key="canvasLocation" x="1315.2671755725191" y="-201.40845070422537"/>
         </scene>
-        <!--Favorite-->
+        <!--Favorite View Controller-->
         <scene sceneID="DvS-3W-Dvx">
             <objects>
                 <viewController id="iVA-HX-Hwb" customClass="FavoriteViewController" customModule="SportsApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -141,34 +141,25 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="HbN-l1-38l">
-                                <rect key="frame" x="178" y="395.66666666666669" width="37" height="37"/>
+                                <rect key="frame" x="178" y="417.66666666666669" width="37" height="37"/>
                                 <color key="color" name="AccentColor"/>
                             </activityIndicatorView>
-                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bps-mg-Sx7">
-                                <rect key="frame" x="0.0" y="59" width="393" height="44"/>
-                                <items>
-                                    <navigationItem title="Favorite Leagues" id="hCc-z0-R5R"/>
-                                </items>
-                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8En-8h-13h"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="hvb-KW-Yit" firstAttribute="top" secondItem="bps-mg-Sx7" secondAttribute="bottom" id="1s1-ej-KIh"/>
                             <constraint firstItem="VTc-rq-9lw" firstAttribute="width" secondItem="MtA-ih-sVL" secondAttribute="width" id="1tg-hi-RLD"/>
-                            <constraint firstItem="bps-mg-Sx7" firstAttribute="top" secondItem="8En-8h-13h" secondAttribute="top" id="5Gw-iT-APk"/>
-                            <constraint firstItem="bps-mg-Sx7" firstAttribute="leading" secondItem="MtA-ih-sVL" secondAttribute="leading" id="8mF-L7-iOm"/>
                             <constraint firstItem="HbN-l1-38l" firstAttribute="centerX" secondItem="8En-8h-13h" secondAttribute="centerX" id="8pY-zl-qZv"/>
                             <constraint firstItem="VTc-rq-9lw" firstAttribute="centerY" secondItem="MtA-ih-sVL" secondAttribute="centerY" id="Fo1-fs-oMH"/>
                             <constraint firstItem="HbN-l1-38l" firstAttribute="centerY" secondItem="8En-8h-13h" secondAttribute="centerY" id="L9j-yn-FGg"/>
+                            <constraint firstItem="hvb-KW-Yit" firstAttribute="top" secondItem="8En-8h-13h" secondAttribute="top" id="Tl9-GX-OyF"/>
                             <constraint firstItem="VTc-rq-9lw" firstAttribute="centerX" secondItem="8En-8h-13h" secondAttribute="centerX" id="WaS-6s-id8"/>
                             <constraint firstItem="VTc-rq-9lw" firstAttribute="top" secondItem="hvb-KW-Yit" secondAttribute="bottom" id="ekR-T5-Smi"/>
-                            <constraint firstAttribute="trailing" secondItem="bps-mg-Sx7" secondAttribute="trailing" id="jCh-Kh-QxA"/>
                             <constraint firstItem="hvb-KW-Yit" firstAttribute="trailing" secondItem="8En-8h-13h" secondAttribute="trailing" id="qBC-wg-3TB"/>
                             <constraint firstItem="hvb-KW-Yit" firstAttribute="leading" secondItem="8En-8h-13h" secondAttribute="leading" id="uc2-Qt-CQf"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Favorite" image="star.fill" catalog="system" id="IOY-I5-wmZ"/>
+                    <navigationItem key="navigationItem" id="Obw-xp-RQK"/>
                     <connections>
                         <outlet property="loadingIndicator" destination="HbN-l1-38l" id="Ojj-X0-Kud"/>
                         <outlet property="searchBar" destination="hvb-KW-Yit" id="0gH-mK-wc2"/>
@@ -177,7 +168,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="91z-qC-oYj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2440.4580152671756" y="-201.40845070422537"/>
+            <point key="canvasLocation" x="3367.1755725190837" y="-201.40845070422537"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="V3A-lt-d04">
@@ -191,7 +182,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="s6E-vM-xke" kind="relationship" relationship="viewControllers" id="mQf-HS-EnC"/>
-                        <segue destination="iVA-HX-Hwb" kind="relationship" relationship="viewControllers" id="klQ-77-MKV"/>
+                        <segue destination="fIy-61-E1b" kind="relationship" relationship="viewControllers" id="klQ-77-MKV"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J24-pO-ZQj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -216,6 +207,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="txl-cU-KOw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="388.54961832061065" y="-201.40845070422537"/>
+        </scene>
+        <!--Favorite-->
+        <scene sceneID="MzN-ER-t0r">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fIy-61-E1b" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Favorite" image="star.fill" catalog="system" id="IOY-I5-wmZ"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="nms-1R-e9b">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="iVA-HX-Hwb" kind="relationship" relationship="rootViewController" id="kGA-wW-eP7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MOB-fT-gYz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2440.4580152671756" y="-201.40845070422537"/>
         </scene>
     </scenes>
     <resources>

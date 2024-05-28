@@ -39,6 +39,7 @@ class LeagueViewController: UIViewController , UITableViewDelegate,UITableViewDa
             
             let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
             if let LeagueDetailsCollectionView = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsId") as? LeagueDetailsCollectionViewController {
+                selectedLeague.sportName = title
                 LeagueDetailsCollectionView.leagueItem = selectedLeague
                 LeagueDetailsCollectionView.sportNameRecieved = title
                 //print(title)

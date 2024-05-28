@@ -17,8 +17,8 @@ class LeagueDetailsViewModelDatabase{
         dataBase?.deleteLeagueFromFavorite(league: league)
     }
     
-    func saveLeagueToFavorite(league : LeagueItem?){
-        dataBase?.saveLeagueToDataBase(league: league!)
+    func saveLeagueToFavorite(league : LeagueItem?, sportName : String){
+        dataBase?.saveLeagueToDataBase(league: league!, sportName: sportName)
     }
     
     func checkIfFavorite(league: LeagueItem)  -> Bool{

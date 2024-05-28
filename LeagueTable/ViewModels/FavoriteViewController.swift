@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Reachability
 class FavoriteViewController: UIViewController , UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate{
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
@@ -15,6 +15,8 @@ class FavoriteViewController: UIViewController , UITableViewDelegate, UITableVie
     var favoriteList : [LeagueItem]?
     var filteredList : [LeagueItem]?
     var viewModel : FavoriteViewModel?
+    var reachability: Reachability!
+    var isReachable: Bool = true
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredList?.count ?? 0
     }
@@ -48,6 +50,27 @@ class FavoriteViewController: UIViewController , UITableViewDelegate, UITableVie
             present(alert, animated: true, completion: nil)
         }
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard isReachable else {
+            showAlertNoConnection()
+            return
+        }
+        print("Item selected at indexPath: \(indexPath)")
+
+        if let selectedLeague = filteredList?[indexPath.row] {
+            
+            let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
+            if let LeagueDetailsCollectionView = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsId") as? LeagueDetailsCollectionViewController {
+                LeagueDetailsCollectionView.leagueItem = selectedLeague
+                LeagueDetailsCollectionView.sportNameRecieved = selectedLeague.sportName
+                //print(title)
+                //print(selectedLeague.league_key ?? <#default value#>)
+                LeagueDetailsCollectionView.modalPresentationStyle = .fullScreen
+               // present(LeagueDetailsCollectionView, animated: true, completion: nil)
+                navigationController?.pushViewController(LeagueDetailsCollectionView, animated: true)
+            }
+        }
+    }
 
     func performDeleteAction(for league: LeagueItem?, at indexPath: IndexPath) {
         viewModel?.deleteLeagueFromFavorite(league: league)
@@ -70,17 +93,24 @@ class FavoriteViewController: UIViewController , UITableViewDelegate, UITableVie
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Favorite Leagues"
         loadingIndicator.stopAnimating()
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
         viewModel = FavoriteViewModel(dataBase: DataBase())
+        setupReachability()
+        startMonitoring()
         // Do any additional setup after loading the view.
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         favoriteList = DataBase().fetchFavoriteLeagues()
         filteredList = favoriteList
         tableView.reloadData()
+    }
+    deinit {
+        stopMonitoring()
     }
     
 
@@ -94,4 +124,46 @@ class FavoriteViewController: UIViewController , UITableViewDelegate, UITableVie
     }
     */
 
+}
+extension FavoriteViewController {
+    func setupReachability() {
+        do {
+            reachability = try Reachability()
+        } catch {
+            print("Unable to create Reachability")
+            return
+        }
+
+        reachability.whenReachable = { [weak self] reachability in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // Add delay to debounce
+                self?.isReachable = true
+                print("Reachable via \(reachability.connection.description)")
+            }
+        }
+
+        reachability.whenUnreachable = { [weak self] _ in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { // Add delay to debounce
+                self?.isReachable = false
+                print("Not reachable")
+            }
+        }
+    }
+
+    func startMonitoring() {
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+    }
+
+    func stopMonitoring() {
+        reachability.stopNotifier()
+    }
+
+    func showAlertNoConnection() {
+        let alert = UIAlertController(title: "No Internet Connection", message: "Please check your internet connection and try again.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
 }

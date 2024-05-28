@@ -341,7 +341,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
         isFavorite.toggle()
         updateFavoriteButtonImage()
         if isFavorite {
-            leagueDetailsViewModelDatabase.saveLeagueToFavorite(league: leagueItem)
+            leagueDetailsViewModelDatabase.saveLeagueToFavorite(league: leagueItem, sportName: leagueItem?.sportName ?? "")
             print("league saved")
         } else {
             leagueDetailsViewModelDatabase.deleteLeagueFromFavorite(league: leagueItem)

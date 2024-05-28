@@ -29,7 +29,7 @@ class DataBase : DataBaseProtocol{
         }
     }
     
-    func saveLeagueToDataBase(league : LeagueItem){
+    func saveLeagueToDataBase(league : LeagueItem, sportName : String){
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             print("Unable to access AppDelegate")
             return
@@ -40,6 +40,7 @@ class DataBase : DataBaseProtocol{
         leagueData.setValue(String(league.league_key ?? 0), forKey: "league_key")
         leagueData.setValue(league.league_logo, forKey: "league_logo")
         leagueData.setValue(league.league_name, forKey: "league_name")
+        leagueData.setValue(sportName, forKey: "sport_name")
         do {
             try managedContext.save()
         } catch let error as NSError {
@@ -62,7 +63,8 @@ class DataBase : DataBaseProtocol{
                 let currLeague = LeagueItem(
                     league_name: data.value(forKey: "league_name") as? String,
                     league_logo: data.value(forKey: "league_logo") as? String,
-                    league_key: Int(data.value(forKey: "league_key") as! String))
+                    league_key: Int(data.value(forKey: "league_key") as! String),
+                    sportName: data.value(forKey: "sport_name") as? String)
                 leagueList.append(currLeague)
             }
             return leagueList
