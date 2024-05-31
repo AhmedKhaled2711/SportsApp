@@ -17,6 +17,8 @@ class FavoriteViewController: UIViewController , UITableViewDelegate, UITableVie
     var viewModel : FavoriteViewModel?
     var reachability: Reachability!
     var isReachable: Bool = true
+    let database = DataBase.favouriteLeagueDB
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredList?.count ?? 0
     }
@@ -98,14 +100,14 @@ class FavoriteViewController: UIViewController , UITableViewDelegate, UITableVie
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
-        viewModel = FavoriteViewModel(dataBase: DataBase())
+        viewModel = FavoriteViewModel(dataBase: database)
         setupReachability()
         startMonitoring()
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        favoriteList = DataBase().fetchFavoriteLeagues()
+        favoriteList = database.fetchFavoriteLeagues()
         filteredList = favoriteList
         tableView.reloadData()
     }

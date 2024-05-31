@@ -10,12 +10,31 @@ import CoreData
 import UIKit
 
 class DataBase : DataBaseProtocol{
+    
+    
+    var nsManagedLeagues : [NSManagedObject] = []
+    let managedContext : NSManagedObjectContext!
+    let favEntity: NSEntityDescription!
+    
+    static let favouriteLeagueDB = DataBase()
+    
+    private init(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        managedContext = appDelegate.persistentContainer.viewContext
+        favEntity = NSEntityDescription.entity(forEntityName: "FavoriteLeague", in: managedContext)
+    }
+    
+    
+    
+    
+    
+    
     func deleteLeagueFromFavorite(league: LeagueItem?) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("Unable to access AppDelegate")
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            print("Unable to access AppDelegate")
+//            return
+//        }
+        //let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteLeague")
         fetchRequest.predicate = NSPredicate(format: "league_name = %@", league?.league_name ?? "")
         do {
@@ -30,13 +49,13 @@ class DataBase : DataBaseProtocol{
     }
     
     func saveLeagueToDataBase(league : LeagueItem, sportName : String){
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("Unable to access AppDelegate")
-            return
-        }
-        let managedContext = appDelegate.persistentContainer.viewContext
-        let entity = NSEntityDescription.entity(forEntityName: "FavoriteLeague", in: managedContext)
-        let leagueData = NSManagedObject(entity: entity!, insertInto: managedContext)
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            print("Unable to access AppDelegate")
+//            return
+//        }
+//        let managedContext = appDelegate.persistentContainer.viewContext
+//        let entity = NSEntityDescription.entity(forEntityName: "FavoriteLeague", in: managedContext)
+        let leagueData = NSManagedObject(entity: favEntity!, insertInto: managedContext)
         leagueData.setValue(String(league.league_key ?? 0), forKey: "league_key")
         leagueData.setValue(league.league_logo, forKey: "league_logo")
         leagueData.setValue(league.league_name, forKey: "league_name")
@@ -48,12 +67,12 @@ class DataBase : DataBaseProtocol{
         }
     }
     func fetchFavoriteLeagues() -> [LeagueItem]? {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("Unable to access AppDelegate")
-            return nil
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            print("Unable to access AppDelegate")
+//            return nil
+//        }
+//        
+//        let managedContext = appDelegate.persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteLeague")
         
         do {
@@ -75,12 +94,12 @@ class DataBase : DataBaseProtocol{
     }
     
     func checkIfFavorite(league: LeagueItem) -> Bool {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("Unable to access AppDelegate")
-            return false
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            print("Unable to access AppDelegate")
+//            return false
+//        }
+//        
+//        let managedContext = appDelegate.persistentContainer.viewContext
         
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "FavoriteLeague")
         
@@ -98,12 +117,12 @@ class DataBase : DataBaseProtocol{
     }
     
     func deleteAll() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-            print("Unable to access AppDelegate")
-            return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+//            print("Unable to access AppDelegate")
+//            return
+//        }
+//        
+//        let managedContext = appDelegate.persistentContainer.viewContext
        
        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "FavoriteLeague")
        

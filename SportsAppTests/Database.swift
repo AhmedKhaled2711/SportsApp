@@ -12,7 +12,7 @@ final class DatabaseTest: XCTestCase {
     var database: DataBaseProtocol!
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        database = DataBase()
+        database = DataBase.favouriteLeagueDB
         database.deleteAll()
     }
     
@@ -38,32 +38,32 @@ final class DatabaseTest: XCTestCase {
     
     func testsaveLeagueToDataBase() {
         let favLeague = LeagueItem(league_name: "Premier League", league_logo: "premier_league_logo.png", league_key: 1)
-        database.saveLeagueToDataBase(league: favLeague)
+        database.saveLeagueToDataBase(league: favLeague, sportName: "Football")
         
         let results = database.fetchFavoriteLeagues()
         XCTAssertEqual(results?.count, 1, "There should be one entry in the context")
     }
     
     func testFetchFavoriteLeagues(){
-        let favLeague1 = LeagueItem(league_name: "Premier League", league_logo: "premier_league_logo.png", league_key: 1)
-        let favLeague2 = LeagueItem(league_name: "NBA", league_logo: "nba_logo.png", league_key: 2)
-        
-        database.saveLeagueToDataBase(league: favLeague1)
-        database.saveLeagueToDataBase(league: favLeague2)
-
-        let results = database.fetchFavoriteLeagues()
-        XCTAssertEqual(results?.count, 2, "There should be two entries in the context")
+       let favLeague1 = LeagueItem(league_name: "Premier League", league_logo: "premier_league_logo.png", league_key: 1)
+       let favLeague2 = LeagueItem(league_name: "NBA", league_logo: "nba_logo.png", league_key: 2)
+       
+       database.saveLeagueToDataBase(league: favLeague1, sportName: "Football")
+       database.saveLeagueToDataBase(league: favLeague2, sportName: "Basketball")
+       
+       let results = database.fetchFavoriteLeagues()
+       XCTAssertEqual(results?.count, 2, "There should be two entries in the context")
     }
     
     func testDeleteLeagueFromFavorite(){
         let favLeague = LeagueItem(league_name: "Premier League", league_logo: "premier_league_logo.png", league_key: 1)
-        database.saveLeagueToDataBase(league: favLeague)
+        database.saveLeagueToDataBase(league: favLeague, sportName: "Football")
         
         var results = database.fetchFavoriteLeagues()
         XCTAssertEqual(results?.count, 1, "There should be one entry in the context before deletion")
-
+        
         database.deleteLeagueFromFavorite(league: favLeague)
-
+        
         results = database.fetchFavoriteLeagues()
         XCTAssertEqual(results?.count, 0, "There should be no entries in the context after deletion")
         
@@ -71,8 +71,8 @@ final class DatabaseTest: XCTestCase {
     
     func testCheckIfFavorite() {
         let favLeague = LeagueItem(league_name: "Premier League", league_logo: "premier_league_logo.png", league_key: 1)
-        database.saveLeagueToDataBase(league: favLeague)
-
+        database.saveLeagueToDataBase(league: favLeague, sportName: "Football")
+        
         let isFavorite = database.checkIfFavorite(league: favLeague)
         XCTAssertTrue(isFavorite, "Premier League should be marked as favorite")
         
@@ -84,13 +84,49 @@ final class DatabaseTest: XCTestCase {
     
     func testDeleteAll(){
         let favLeague = LeagueItem(league_name: "Premier League", league_logo: "premier_league_logo.png", league_key: 1)
-        database.saveLeagueToDataBase(league: favLeague)
+        database.saveLeagueToDataBase(league: favLeague, sportName: "Football")
         
         database.deleteAll()
-
+        
         let results = database.fetchFavoriteLeagues()
         XCTAssertEqual(results?.count, 0, "There should be no entries in the context after deletion")
     }
+    
+    func testDeleteLeagueFromFavoriteFail(){
+        let favLeague = LeagueItem(league_name: "Premier League", league_logo: "premier_league_logo.png", league_key: 1)
+        database.saveLeagueToDataBase(league: favLeague, sportName: "Football")
+        
+        var results = database.fetchFavoriteLeagues()
+        XCTAssertEqual(results?.count, 1, "There should be one entry in the context before deletion")
+        
+        database.deleteLeagueFromFavorite(league: LeagueItem())
+        
+        results = database.fetchFavoriteLeagues()
+        XCTAssertEqual(results?.count, 1, "There should be no entries in the context after deletion")
+        
+    }
+    
+    func testsaveLeagueToDataBaseFail() {
+        let favLeague = LeagueItem(league_name: "Premier League", league_logo: "premier_league_logo.png", league_key: 1)
+        database.saveLeagueToDataBase(league: LeagueItem(), sportName: "")
+        
+        let results = database.fetchFavoriteLeagues()
+        XCTAssertEqual(results?.count, 1, "There should be one entry in the context")
+    }
+    
+    func testFetchFavoriteLeaguesFail(){
+       let favLeague1 = LeagueItem(league_name: "Premier League", league_logo: "premier_league_logo.png", league_key: 1)
+       let favLeague2 = LeagueItem(league_name: "NBA", league_logo: "nba_logo.png", league_key: 2)
+       
+       database.saveLeagueToDataBase(league: LeagueItem(), sportName: "")
+       database.saveLeagueToDataBase(league: LeagueItem(), sportName: "")
+       
+       let results = database.fetchFavoriteLeagues()
+       XCTAssertEqual(results?.count, 2, "There should be two entries in the context")
+    }
+
+    
+    
     
     
     

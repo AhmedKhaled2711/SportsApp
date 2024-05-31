@@ -24,15 +24,19 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
     var listOfLiveMatches : [LiveMatchResult]?
     var listOfTeams : [Team]?
     var isFavorite = false
-    let leagueDetailsViewModelDatabase = LeagueDetailsViewModelDatabase(dataBase: DataBase()) // Need to implement dependency incjection later
+    let database = DataBase.favouriteLeagueDB
+    var leagueDetailsViewModelDatabase : LeagueDetailsViewModelDatabase?
     var favoriteButtonItem: UIBarButtonItem?
+    
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        leagueDetailsViewModelDatabase = LeagueDetailsViewModelDatabase(dataBase: DataBase.favouriteLeagueDB)
         
         if let league = leagueItem {
-            isFavorite = leagueDetailsViewModelDatabase.checkIfFavorite(league: league)
+            isFavorite = leagueDetailsViewModelDatabase?.checkIfFavorite(league: league) ?? false
             print(isFavorite)
         }
        // updateFavoriteButtonImage()
@@ -341,10 +345,10 @@ class LeagueDetailsCollectionViewController: UICollectionViewController  , Secti
         isFavorite.toggle()
         updateFavoriteButtonImage()
         if isFavorite {
-            leagueDetailsViewModelDatabase.saveLeagueToFavorite(league: leagueItem, sportName: leagueItem?.sportName ?? "")
+            leagueDetailsViewModelDatabase?.saveLeagueToFavorite(league: leagueItem, sportName: leagueItem?.sportName ?? "")
             print("league saved")
         } else {
-            leagueDetailsViewModelDatabase.deleteLeagueFromFavorite(league: leagueItem)
+            leagueDetailsViewModelDatabase?.deleteLeagueFromFavorite(league: leagueItem)
             print("league deleted")
         }
     }
