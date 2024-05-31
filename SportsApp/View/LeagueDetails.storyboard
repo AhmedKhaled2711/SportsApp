@@ -258,7 +258,7 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="League Details" id="Zhc-GM-mkn">
-                        <barButtonItem key="rightBarButtonItem" image="heart" catalog="system" id="z7J-Bw-4k5"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="heart" id="z7J-Bw-4k5"/>
                     </navigationItem>
                     <connections>
                         <outlet property="loadingIndicator" destination="3gS-T6-Mgv" id="2rR-Qv-wou"/>
@@ -289,7 +289,7 @@
     </scenes>
     <resources>
         <image name="alahly" width="900" height="900"/>
-        <image name="heart" catalog="system" width="128" height="107"/>
+        <image name="heart" width="50" height="50"/>
         <image name="vsimage" width="500" height="500"/>
         <image name="zamalek" width="348" height="458"/>
         <namedColor name="AccentColor">
