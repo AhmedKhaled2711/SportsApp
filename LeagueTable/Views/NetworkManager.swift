@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 class NetworkManager : NetworkServiceProtocol{
-    let API_KEY = "22dda350e03f8f59a082bcf441d5cb29a48277d786b6c3abe6197bc43205fab8"
+    let API_KEY = "51d23fbecdf2c5bd3747bd385615b07c2435b5a78ea1b188c45391d1641d4610"
     let baseUrl = ""
     
     func fetchLeaguesData(sportName : String ,completion: @escaping (Result<LeagueResponse, Error>) -> Void) {
