@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 class NetworkManager : NetworkServiceProtocol{
-    let API_KEY = "22dda350e03f8f59a082bcf441d5cb29a48277d786b6c3abe6197bc43205fab8"
+    let API_KEY = "51d23fbecdf2c5bd3747bd385615b07c2435b5a78ea1b188c45391d1641d4610"
     let baseUrl = ""
     
     func fetchLeaguesData(sportName : String ,completion: @escaping (Result<LeagueResponse, Error>) -> Void) {
@@ -49,21 +49,11 @@ class NetworkManager : NetworkServiceProtocol{
             }
     }
     
-    func fetchLiveMatchResults(sportName : String , leagueId: Int, completion: @escaping (Result<liveMatchResponse, any Error>) -> Void) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let currentDate = Date()
-        guard let oneYearLaterDate = Calendar.current.date(byAdding: .year, value: -1, to: currentDate) else {
-            completion(.failure("Network error badURL" as! Error))
-            return
-        }
-        let currentDateString = dateFormatter.string(from: currentDate)
-        let oneYearLaterDateString = dateFormatter.string(from: oneYearLaterDate)
-        
+    func fetchLiveMatchResults(sportName : String , leagueId: Int, completion: @escaping (Result<LiveMatchResponse, any Error>) -> Void) {
         let urlString = "https://apiv2.allsportsapi.com/\(sportName)?met=Livescore&leagueId=\(leagueId)&APIkey=\(API_KEY)"
         AF.request(urlString)
             .validate()
-            .responseDecodable(of: liveMatchResponse.self) { response in
+            .responseDecodable(of: LiveMatchResponse.self) { response in
                 switch response.result {
                 case .success(let fixtureResponse):
                     completion(.success(fixtureResponse))
@@ -73,4 +63,66 @@ class NetworkManager : NetworkServiceProtocol{
             }
     }
     
+    func fetchTeams(sportName: String, leagueId: Int, completion: @escaping (Result<TeamResponse, any Error>) -> Void) {
+        let urlString = "https://apiv2.allsportsapi.com/\(sportName)/?met=Teams&leagueId=\(leagueId)&APIkey=\(API_KEY)"
+
+        AF.request(urlString)
+            .validate()
+            .responseDecodable(of: TeamResponse.self) { response in
+                switch response.result {
+                case .success(let teamResponse):
+                    completion(.success(teamResponse))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    func fetchTeamDetails(sportName: String, teamId: Int, completion: @escaping (Result<TeamDetailsResponse, any Error>) -> Void) {
+        let urlString = "https://apiv2.allsportsapi.com/\(sportName)/?met=Teams&teamId=\(teamId)&APIkey=\(API_KEY)"
+        AF.request(urlString)
+            .validate()
+            .responseDecodable(of: TeamDetailsResponse.self) { response in
+                switch response.result {
+                case .success(let teamResponse):
+                    completion(.success(teamResponse))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        
+    }
+    
+    func fetchLatest(sportName: String, leagueId: Int, completion: @escaping (Result<LiveMatchResponse, Error>) -> Void) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let currentDate = Date()
+        
+        // Calculate one month earlier date
+        guard let oneMonthEarlierDate = Calendar.current.date(byAdding: .month, value: -1, to: currentDate) else {
+            completion(.failure("Network error: Unable to calculate date" as! Error))
+            return
+        }
+        
+        let currentDateString = dateFormatter.string(from: currentDate)
+        let oneMonthEarlierDateString = dateFormatter.string(from: oneMonthEarlierDate)
+        
+        let urlString = "https://apiv2.allsportsapi.com/\(sportName)?met=Fixtures&leagueId=\(leagueId)&from=\(oneMonthEarlierDateString)&to=\(currentDateString)&APIkey=\(API_KEY)"
+        
+        AF.request(urlString)
+            .validate()
+            .responseDecodable(of: LiveMatchResponse.self) { response in
+                switch response.result {
+                case .success(let fixtureResponse):
+                    completion(.success(fixtureResponse))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+
+    
+    
 }
+
+

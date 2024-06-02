@@ -11,7 +11,8 @@ import Reachability
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var collectionView: UICollectionView!
     var sports: [String] = ["Football", "Basketball", "Cricket", "Tennis"]
-    var images: [String] = ["footballplayer.png", "basketballplayer.png", "cricketplayer.png", "tennisplayer.png"]
+    //var images: [String] = ["footballplayer.png", "basketballplayer.png", "cricketplayer.png", "tennisplayer.png"]
+    var images: [String] = ["football", "basketball", "cricket", "tennis"]
     var reachability: Reachability!
     var isReachable: Bool = true
 
